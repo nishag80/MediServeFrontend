@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import "./App.css";
+
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:9090/api/v1/auth/authenticate', {
+      const loginResponse = await fetch('http://localhost:9090/api/v1/auth/authenticate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,17 +20,32 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
+      if (!loginResponse.ok) {
         throw new Error('Login failed');
       }
 
-      const data = await response.json();
-      localStorage.setItem('token', data.token);
-      console.log('Token:', data.token);
-      // Optionally, you can redirect the user or perform other actions here
+      const loginData = await loginResponse.json();
+      const token = loginData.token;
+      localStorage.setItem('token', token);
+
+      const salesResponse = await fetch('http://localhost:9090/api/v1/dashboard', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!salesResponse.ok) {
+        throw new Error('Failed to fetch total sales amount');
+      }
+
+      const salesData = await salesResponse.json();
+      const totalSaleAmt = salesData.data;
+
+      navigate('/dashboard', { state: { totalSaleAmt } });
     } catch (error) {
       console.error('Error:', error);
-      setError('Login failed. Please check your credentials and try again.');
+      setError('An error occurred. Please try again.');
     }
   };
 
@@ -53,7 +72,7 @@ function Login() {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button className='button' type="submit">Login</button>
       </form>
     </div>
   );
