@@ -1,15 +1,12 @@
 import React, { Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CSpinner, useColorModes } from "@coreui/react";
 import "./scss/style.scss";
+import routes from "./routes";
 
-// Pages
-const Login = React.lazy(() => import("./views/pages/login/Login"));
-const Register = React.lazy(() => import("./views/pages/register/Register"));
+// Import Page404 component
 const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
-const Page500 = React.lazy(() => import("./views/pages/page500/Page500"));
-const DefaultLayout = React.lazy(() => import("./layouts/DefaultLayout"));
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes(
@@ -40,17 +37,39 @@ const App = () => {
         }
       >
         <Routes>
-          {/* Login Page Route (Without Default Layout) */}
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/404" element={<Page404 />} />
-          <Route path="/500" element={<Page500 />} />
-
-          {/* Dashboard Route (With Default Layout) */}
-          <Route path="/dashboard/*" element={<DefaultLayout />} />
-
-          {/* Redirect unknown routes to 404 */}
-          <Route path="*" element={<Navigate to="/404" replace />} />
+          {routes.map((route, idx) => {
+            const RouteElement = route.element;
+            const Layout = route.layout || React.Fragment;
+            return (
+              <Route
+                key={idx}
+                path={route.path}
+                element={
+                  <Layout>
+                    {route.children ? (
+                      // Render the parent route's element (Outlet) and its children
+                      <RouteElement>
+                        <Routes>
+                          {route.children.map((childRoute, childIdx) => (
+                            <Route
+                              key={childIdx}
+                              path={childRoute.path}
+                              element={<childRoute.element />}
+                            />
+                          ))}
+                        </Routes>
+                      </RouteElement>
+                    ) : (
+                      // Render the route's element directly
+                      <RouteElement />
+                    )}
+                  </Layout>
+                }
+              />
+            );
+          })}
+          {/* Catch-all route for undefined paths */}
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

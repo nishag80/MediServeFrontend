@@ -49,34 +49,21 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Base',
-    to: '/base',
+    name: 'User Setup',
+    to: '/user',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Accordion',
-        to: '/base/accordion',
+        name: 'User List',
+        to: '/user/userList',
       },
       {
         component: CNavItem,
-        name: 'Breadcrumb',
-        to: '/base/breadcrumbs',
+        name: 'Create User',
+        to: '/user/createUser',
       },
-      {
-        component: CNavItem,
-        name: (
-          <React.Fragment>
-            {'Calendar'}
-            <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
-          </React.Fragment>
-        ),
-        href: 'https://coreui.io/react/docs/components/calendar/',
-        badge: {
-          color: 'danger',
-          text: 'PRO',
-        },
-      },
+
       {
         component: CNavItem,
         name: 'Cards',
