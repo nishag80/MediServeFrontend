@@ -37,7 +37,7 @@ import {
   cifPl,
   cifUs,
   cibTwitter,
-  cilPlus ,
+  cilPlus,
   cilPeople,
   cilUser,
   cilUserFemale,
@@ -51,16 +51,17 @@ import avatar5 from 'src/assets/images/avatars/5.jpg'
 import avatar6 from 'src/assets/images/avatars/6.jpg'
 import { useNavigate } from 'react-router-dom';
 
-import WidgetsBrand from '../widgets/WidgetsBrand'
-import WidgetsDropdown from '../widgets/WidgetsDropdown'
+
 // import MainChart from './MainChart'
 
-const Dashboard = () => {
+const ProductList = () => {
+
   const navigate = useNavigate();
 
-  const handleCreateProductClick = () => {
-    navigate('/user/createUser'); // Navigate to the add-product page
+  const handleAddProductClick = () => {
+    navigate('/product/addProduct'); // Navigate to the add-product page
   };
+
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
@@ -240,20 +241,20 @@ const Dashboard = () => {
         </CCardFooter>
       </CCard>  */}
       {/* <WidgetsBrand className="mb-4" withCharts /> */}
-       <CRow className="d-flex justify-content-end">
-              <CCol xs={3}>
-                <CButton color="primary" onClick={handleCreateProductClick} className="ml-3 w-50">
-                  <CIcon icon={cilPlus} /> Create User
-                </CButton>
-              </CCol>
-        </CRow>
-        <CRow>
-          <br></br>
-        </CRow>
+      <CRow className="d-flex justify-content-end">
+        <CCol xs={3}>
+          <CButton color="primary" onClick={handleAddProductClick} className="ml-3 w-50">
+            <CIcon icon={cilPlus} /> Add Product
+          </CButton>
+        </CCol>
+      </CRow>
+      <CRow>
+        <br></br>
+      </CRow>
       <CRow>
         <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>User List</CCardHeader>
+            <CCardHeader>Product List</CCardHeader>
             <CCardBody>
               {/* <CRow>
                 <CCol xs={12} md={6} xl={6}>
@@ -400,4 +401,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default ProductList

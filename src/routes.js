@@ -8,6 +8,9 @@ const Login = React.lazy(() => import("./views/pages/login/Login"))
 const UserList = React.lazy(() => import("./views/user-setup/UserList"))
 const Register = React.lazy(() => import("./views/pages/register/Register"))
 const Page500 = React.lazy(() => import("./views/pages/page500/Page500"))
+const CreateUser = React.lazy(() => import("./views/user-setup/CreateUser"))
+const AddProduct = React.lazy(()=> import("./views/pages/product-setup/AddProduct"))
+const ProductList = React.lazy(()=> import("./views/pages/product-setup/ProductList"))
 
 const routes = [
   { path: "/", exact: true, name: "Login", element: Login },
@@ -16,6 +19,9 @@ const routes = [
   { path: "/500", name: "Page 500", element: Page500 },
   { path: "/dashboard", name: "Dashboard", element: Dashboard, layout: DefaultLayout },
   { path: "/user/userList", name: "User List", element: UserList, layout: DefaultLayout },
+  { path: "/user/createUser",name:"Create User", element: CreateUser,layout:DefaultLayout},
+  { path: "/product/productList",name:"Product List", element: ProductList,layout:DefaultLayout},
+  { path: "/product/addProduct",name:"Add Product", element: AddProduct,layout:DefaultLayout},
   { path: "*", name: "Not Found", element: Page404 },
 ];
 
