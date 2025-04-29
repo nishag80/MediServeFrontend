@@ -59,7 +59,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const handleCreateProductClick = () => {
-    navigate('/user/createUser'); // Navigate to the add-product page
+    navigate('/user/createUser'); // Navigate to the create-user page
   };
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
