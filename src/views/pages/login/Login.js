@@ -17,6 +17,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
+import axiosInstance from "../../../api/axiosInstance";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -33,11 +34,14 @@ const Login = () => {
     localStorage.setItem("token", "user-auth-token");
     toast.success("Login successful!", { position: "top-right" });
 
-    setTimeout(() => {
-      navigate("/dashboard"); // Redirect after 1 second
-    }, 1000);
+    // setTimeout(() => {
+    //   navigate("/dashboard"); // Redirect after 1 second
+    // }, 1000);
+    fetchUserDetails()
   };
-
+ const fetchUserDetails = () => {
+  return axiosInstance.get('https://mpa0a99e2f8fcb80a576.free.beeceptor.com');
+}; 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>

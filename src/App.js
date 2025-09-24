@@ -1,9 +1,11 @@
 import React, { Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate, Outlet } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CSpinner, useColorModes } from "@coreui/react";
 import "./scss/style.scss";
 import routes from "./routes";
+import setupInterceptors from "./api/axiosInterceptors";
+import axiosInstance from "./api/axiosInstance";
 
 // Import Page404 component
 const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
@@ -12,6 +14,8 @@ const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes(
     "coreui-free-react-admin-template-theme",
   );
+ 
+
   const storedTheme = useSelector((state) => state.theme);
 
   useEffect(() => {
@@ -25,8 +29,11 @@ const App = () => {
     if (!isColorModeSet()) {
       setColorMode(storedTheme);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    setupInterceptors();
 
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps 
+
+   
   return (
     <BrowserRouter>
       <Suspense
